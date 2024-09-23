@@ -1,4 +1,6 @@
-﻿namespace ConsoleApp4
+﻿using MySystem.MyCollections;
+
+namespace ConsoleApp4
 {
     internal static class Program
     {
@@ -13,8 +15,24 @@
             };
 
             cars.Sort(SortCondition);
-            WriteLineCollection(cars, c => new { A = c.Model, B = c.LicenseNumber });
+            cars.Sort((a, b) =>
+            {
+                if (a.YearOfManufacture < b.YearOfManufacture)
+                    return -1;
+                else
+                    if (a.YearOfManufacture > b.YearOfManufacture)
+                    return 1;
+
+                return 0;
+            });
+
+            WriteLineCollection(cars, c => new { Modell = c.Model, B = c.LicenseNumber });
             WriteLineCollection(cars, c => c);
+            WriteLineCollection(cars, c => $"{c.Brand} {c.Model}");
+            WriteLineCollection(cars, c => $"{c.Model} Long model name: {c.Model.Length > 6}");
+            WriteLineCollection(cars, c => "Hej!");
+
+            cars.WriteLineCollection(c => "Uddevalla");
         }
 
         static int SortCondition(Car a, Car b)
@@ -28,15 +46,7 @@
             return 0;
         }
 
-        //private static void PrintCars(MyList<Car> cars)
-        //{
-        //    foreach (Car car in cars)
-        //        Console.WriteLine($"{car.Brand} {car.Model} {car.LicenseNumber} {car.YearOfManufacture}");
-
-        //    Console.WriteLine("-----------------------------------------");
-        //}
-
-        private static void WriteLineCollection<T, Y>(IEnumerable<T> collection, Func<T, Y> getDataFrom) // IEnumerable!
+        private static void WriteLineCollection<T, Y>(this IEnumerable<T> collection, Func<T, Y> getDataFrom) // IEnumerable!
         {
             foreach (T item in collection)
                 Console.WriteLine(getDataFrom(item));

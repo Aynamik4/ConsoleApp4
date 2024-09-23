@@ -1,4 +1,6 @@
-﻿//LINQ
+﻿namespace MySystem.MyCollections;
+
+//LINQ
 //	1. Delegates
 //	2. Generics
 //	3. Extension Methods
@@ -6,9 +8,7 @@
 
 using System.Collections;
 
-namespace ConsoleApp4;
-
-internal class MyList<T> : IEnumerable<T>
+public class MyList<T> : IEnumerable<T>
 {
     T[] values = new T[3];
 
